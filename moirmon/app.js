@@ -5,11 +5,10 @@ var http = require("http");
 
 var configFile = fs.readFileSync("config.js");
 var config = JSON.parse(configFile);
-var repo;
 repositories = [];
 
 
-var getUpdateDate = function (pkgrepo) {
+var getRepositoryInfo= function (pkgrepo) {
 	var options = {
 		host: pkgrepo.host,
 		port: pkgrepo.port,
@@ -29,18 +28,27 @@ var getUpdateDate = function (pkgrepo) {
 			var lastUpdate = info.repository.publishers[pkgrepo.identifier]["last-catalog-update"];
 			var pkgCount = info.repository.publishers[pkgrepo.identifier]["package-count"];
 			var pkgVerCount = info.repository.publishers[pkgrepo.identifier]["package-version-count"];
-			console.log(pkgrepo.host + "/" + pkgrepo.path + ": " + lastUpdate + " - " + pkgCount + " - " + pkgVerCount);*/
+			console.log(pkgrepo.host + "/" + pkgrepo.path + ": " + lastUpdate + " - " + pkgCount + " - " + pkgVerCount);
+			*/
 		});
 	});
 };
 
-for (repo in config.repositories) {
-	if (config.repositories.hasOwnProperty(repo)) {
-		var repository = config.repositories[repo];
+var updateAllRepositories = function () {
+	var repo;
+	for (repo in config.repositories) {
+		if (config.repositories.hasOwnProperty(repo)) {
+			var repository = config.repositories[repo];
 		
-		getUpdateDate(repository);
-		//console.log(getUpdateDate(repository));
+			getRepositoryInfo(repository);
+		}
 	}
-}
-setTimeout(function() {console.log(repositories);}, 5000);
-//getUpdateDate({"host": "pkg-1.dk.openindiana.org", "port": 80, "path": "dev", "identifier": "openindiana.org"});
+};
+
+setInterval(function() {
+	console.log(repositories);
+}, 10000);
+
+setInterval(function() {
+	updateAllRepositories();
+}, 10000);
