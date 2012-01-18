@@ -3,7 +3,7 @@
 var fs = require("fs");
 var http = require("http");
 
-var configFile = fs.readFileSync("config.js");
+var configFile = fs.readFileSync("config.json");
 var config = JSON.parse(configFile);
 repositories = [];
 
