@@ -55,15 +55,8 @@ for i in range(0, 256):
             sf = os.path.join(source_hex, f)
             df = os.path.join(destination, f)
 
-            # Source file exists, destination file doesn't exist
-            if os.path.exists(sf) and not os.path.exists(df):
-                shutil.copy2(sf, df)
-            # Source file doesn't exist, destination file exists
-            elif not os.path.exists(sf) and os.path.exists(df):
-                os.remove(df)
-            else:
-                print '- %s could not be compared' % (f),
-                sys.stdout.flush()
+            # The file list is based on files in the source directory, so we know the file is missing at the destination
+            shutil.copy2(sf, df)
 
         print '- Missing files done',
         sys.stdout.flush()
