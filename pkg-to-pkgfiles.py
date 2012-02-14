@@ -29,6 +29,7 @@ for i in range(0, 256):
     hex = '%0.2x' % (i)
     source_hex = os.path.join(source, hex)
     print 'Working on %s:' % (hex),
+    sys.stdout.flush()
 
     if not os.path.isdir(source_hex):
         print 'Directory missing from the source'
